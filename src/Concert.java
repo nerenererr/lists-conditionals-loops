@@ -9,16 +9,17 @@ public class Concert {
     private ArrayList<Ticket> ticketsSold;
     private boolean active;
 
-    public Concert(String artist, String city, double basePrice, int maxAforum, ArrayList<Ticket> ticketsSold, boolean active) {
+    public Concert(String artist, String city, double basePrice, int maxAforum, boolean active) {
         this.artist = artist;
         this.city = city;
         this.basePrice = basePrice;
         this.maxAforum = maxAforum;
-        this.ticketsSold = ticketsSold;
+        this.ticketsSold = new ArrayList<>(); // ticketsSold is initialized here because a concert starts with no tickets sold
         this.active = active;
     }
 
     public Concert() {
+
     }
 
     public String getArtist() {
@@ -84,6 +85,10 @@ public class Concert {
         return calculateRevenue() / ticketsSold.size(); //Se divide el total recaudado entre el tamaño del array de entradas vendidas
     }
 
+    public boolean availableTickets() {
+        return ticketsSold.size() < maxAforum;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -95,5 +100,10 @@ public class Concert {
     @Override
     public int hashCode() {
         return Objects.hash(artist, city, basePrice, maxAforum, ticketsSold, active);
+    }
+
+    @Override
+    public String toString() {
+        return this.artist + "'s concert in " + this.city;
     }
 }
