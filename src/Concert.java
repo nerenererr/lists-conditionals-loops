@@ -9,17 +9,16 @@ public class Concert {
     private ArrayList<Ticket> ticketsSold;
     private boolean active;
 
-    public Concert(String artist, String city, double basePrice, int maxAforum, boolean active) {
+    public Concert(String artist, String city, double basePrice, int maxAforum, ArrayList<Ticket> ticketsSold, boolean active) {
         this.artist = artist;
         this.city = city;
         this.basePrice = basePrice;
         this.maxAforum = maxAforum;
-        this.ticketsSold = new ArrayList<>(); // ticketsSold is initialized here because a concert starts with no tickets sold
+        this.ticketsSold = ticketsSold;
         this.active = active;
     }
 
     public Concert() {
-
     }
 
     public String getArtist() {
@@ -71,18 +70,18 @@ public class Concert {
     }
 
     public double calculateRevenue() {
-        double revenue = 0; //Variable para acumular el total
-        for (Ticket ticket : ticketsSold) {  //Recorre todas las entradas vendidas
-            revenue += ticket.getTotalPrice(); //Por cada entrada suma su precio al total
+        double revenue = 0;
+        for (Ticket ticket : ticketsSold) {
+            revenue += ticket.getTotalPrice(); // Add each ticket's price to total
         }
-        return revenue; //Devuelve el total acumulado
+        return revenue;
     }
 
     public double calculateAveragePrice() {
-        if (ticketsSold.isEmpty()) { //Si no hay ninguna entrada vendida devuelve 0
+        if (ticketsSold.isEmpty()) { // If no tickets sold, return 0
             return 0;
         }
-        return calculateRevenue() / ticketsSold.size(); //Se divide el total recaudado entre el tamaño del array de entradas vendidas
+        return calculateRevenue() / ticketsSold.size(); // Divide total revenue by number of tickets
     }
 
     public boolean availableTickets() {
@@ -94,12 +93,12 @@ public class Concert {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Concert concert = (Concert) o;
-        return Double.compare(basePrice, concert.basePrice) == 0 && maxAforum == concert.maxAforum && active == concert.active && Objects.equals(artist, concert.artist) && Objects.equals(city, concert.city) && Objects.equals(ticketsSold, concert.ticketsSold);
+        return Double.compare(basePrice, concert.basePrice) == 0 && maxAforum == concert.maxAforum && active == concert.active && Objects.equals(artist, concert.artist) && Objects.equals(city, concert.city);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(artist, city, basePrice, maxAforum, ticketsSold, active);
+        return Objects.hash(artist, city, basePrice, maxAforum, active);
     }
 
     @Override

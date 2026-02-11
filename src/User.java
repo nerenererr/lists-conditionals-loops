@@ -10,14 +10,13 @@ public class User {
     private HashSet<Concert> concertsAttended;
     private HashMap<Concert, Integer> reviews; //num entero con Integer porque no se permiten tipos primitivos en HashMap
 
-    public User(String name, int age) {
+    public User(String name, int age, ArrayList<Ticket> ticketsBought, HashSet<Concert> concertsAttended, HashMap<Concert, Integer> reviews) {
         this.name = name;
         this.age = age;
-        this.ticketsBought = new ArrayList<>();
-        this.concertsAttended = new HashSet<>();
-        this.reviews = new HashMap<>();
+        this.ticketsBought = ticketsBought;
+        this.concertsAttended = concertsAttended;
+        this.reviews = reviews;
     }
-
 
     public User() {
     }
@@ -63,13 +62,17 @@ public class User {
     }
 
     public void buyTicket(Concert concert, Ticket.Type type) {
+        // Check if concert is still active
         if (!concert.isActive()) {
-            System.out.println("Error: no longer active");
+            System.out.println("Error: the concert is no longer active /ᐠ ╥ ˕ ╥マ");
+            // Check if user already attended this concert
         } else if (this.concertsAttended.contains(concert)) {
-            System.out.println("Error: already attended");
+            System.out.println("Error: you already attended this concert >^•-•^<");
+            // Check if tickets are still available
         } else if (!concert.availableTickets()) {
-            System.out.println("No more tickets available");
+            System.out.println("No more tickets available ⚞^. .^⚟");
         } else {
+            // Create new ticket and add to both concert and user collections
             Ticket ticket = new Ticket(concert, type);
             concert.getTicketsSold().add(ticket);
             this.ticketsBought.add(ticket);
@@ -78,11 +81,14 @@ public class User {
     }
 
     public void toReview(Concert concert, int review) {
+        // Check if user attended the concert
         if (!concertsAttended.contains(concert)) {
-            System.out.println("Error");
+            System.out.println("You did not attend this concert (•˕ •マ.ᐟ");
+            // Validate review is within valid range
         } else if (review < 0 || review > 10) {
-            System.out.println("Error");
+            System.out.println("Not a valid number ₍^. .^₎⟆");
         } else {
+            // Store or update reviews for this concert
             this.reviews.put(concert, review);
         }
     }
@@ -101,6 +107,6 @@ public class User {
 
     @Override
     public String toString() {
-        return this.name + " (" + this.concertsAttended + " concerts attended)";
+        return this.name + " :" + this.concertsAttended;
     }
 }

@@ -37,7 +37,7 @@ public class Ticket {
         } else if (type == Type.VIP) {
             return concert.getBasePrice() * 1.2;
         } else {
-            return concert.getBasePrice(); //En caso de que no se introduzca ningún tipo devuelve el precio base
+            return concert.getBasePrice();
         }
     }
 
