@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import exceptions.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,28 +19,99 @@ public class Main {
 
         //users
         User user1 = new User("Terry", 19, new ArrayList<>(), new HashSet<>(), new HashMap<>());
-        user1.buyTicket(kaliUchis, Ticket.Type.SEATS);
-        user1.buyTicket(amaia, Ticket.Type.VIP);
-        user1.toReview(amaia, 10);
-        System.out.println(user1);
-
-
         User user2 = new User("Diego", 24, new ArrayList<>(), new HashSet<>(), new HashMap<>());
-        user2.buyTicket(kaliUchis, Ticket.Type.FLOOR);
-        user2.buyTicket(theodora, Ticket.Type.FLOOR);
-        user2.toReview(kaliUchis, 8);
-        System.out.println(user2);
-
-
         User user3 = new User("Kim", 33, new ArrayList<>(), new HashSet<>(), new HashMap<>());
-        user3.buyTicket(theodora, Ticket.Type.VIP);
-        user3.buyTicket(amaia, Ticket.Type.FLOOR);
-        user3.toReview(theodora, 10);
+
+        try {
+            user1.buyTicket(kaliUchis, Ticket.Type.SEATS);
+            System.out.println("ฅ^•ﻌ•^ฅ Terry bought ticket for Kali Uchis");
+        } catch (InactiveConcertException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+        } catch (AlreadyAttendedException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+        } catch (SoldOutException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+        }
+
+        try {
+            user1.buyTicket(amaia, Ticket.Type.VIP);
+            System.out.println("ฅ^•ﻌ•^ฅ Terry bought ticket for Amaia");
+        } catch (InactiveConcertException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());  // This will execute
+        } catch (AlreadyAttendedException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+        } catch (SoldOutException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+        }
+
+        try {
+            user1.toReview(kaliUchis, 10);
+            System.out.println("ฅ^•ﻌ•^ฅ Terry reviewed Kali Uchis");
+        } catch (NotAttendedException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+        } catch (InvalidRatingException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+        }
+
+        try {
+            user1.toReview(amaia, 10);
+            System.out.println("ฅ^•ﻌ•^ฅ Terry reviewed Amaia");
+        } catch (NotAttendedException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());  // This will execute
+        } catch (InvalidRatingException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+        }
+
+
+        try {
+            user2.buyTicket(kaliUchis, Ticket.Type.FLOOR);
+            user2.buyTicket(theodora, Ticket.Type.FLOOR);
+            System.out.println("ฅ^•ﻌ•^ฅ Diego bought tickets");
+        } catch (InactiveConcertException | AlreadyAttendedException | SoldOutException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+        }
+
+        try {
+            user2.toReview(kaliUchis, 8);
+            System.out.println("ฅ^•ﻌ•^ฅ Diego reviewed Kali Uchis");
+        } catch (NotAttendedException | InvalidRatingException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+        }
+
+
+        try {
+            user3.buyTicket(theodora, Ticket.Type.VIP);
+            System.out.println("ฅ^•ﻌ•^ฅ Kim bought ticket for Theodora");
+        } catch (InactiveConcertException | AlreadyAttendedException | SoldOutException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+        }
+
+        try {
+            user3.buyTicket(amaia, Ticket.Type.FLOOR);
+            System.out.println("ฅ^•ﻌ•^ฅ Kim bought ticket for Amaia");
+        } catch (InactiveConcertException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());  // This will execute
+        } catch (AlreadyAttendedException | SoldOutException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+        }
+
+        try {
+            user3.toReview(theodora, 10);
+            System.out.println("ฅ^•ﻌ•^ฅ Kim reviewed Theodora");
+        } catch (NotAttendedException | InvalidRatingException e) {
+            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+        }
+
+        System.out.println("=== Users ===");
+        System.out.println(user1);
+        System.out.println(user2);
         System.out.println(user3);
 
 
 
         //statistics
+
+        System.out.println("=== Statistics ===");
 
         int totalTickets = theodora.getTicketsSold().size() + kaliUchis.getTicketsSold().size() + amaia.getTicketsSold().size();
         System.out.println("Total tickets: " + totalTickets);

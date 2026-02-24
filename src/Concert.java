@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Objects;
+import exceptions.NoTicketsSoldException;
 
 public class Concert {
     private String artist;
@@ -77,9 +78,9 @@ public class Concert {
         return revenue;
     }
 
-    public double calculateAveragePrice() {
-        if (ticketsSold.isEmpty()) { // If no tickets sold, return 0
-            return 0;
+    public double calculateAveragePrice() throws NoTicketsSoldException {
+        if (ticketsSold.isEmpty()) {
+            throw new NoTicketsSoldException();
         }
         return calculateRevenue() / ticketsSold.size(); // Divide total revenue by number of tickets
     }

@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
+import exceptions.*;
 
 public class User {
     private String name;
@@ -61,16 +62,14 @@ public class User {
         this.reviews = reviews;
     }
 
-    public void buyTicket(Concert concert, Ticket.Type type) {
+    public void buyTicket(Concert concert, Ticket.Type type) throws InactiveConcertException, AlreadyAttendedException, SoldOutException {
         // Check if concert is still active
         if (!concert.isActive()) {
-            System.out.println("Error: the concert is no longer active /ᐠ ╥ ˕ ╥マ");
-            // Check if user already attended this concert
+            throw new InactiveConcertException();
         } else if (this.concertsAttended.contains(concert)) {
-            System.out.println("Error: you already attended this concert >^•-•^<");
-            // Check if tickets are still available
+            throw new AlreadyAttendedException();
         } else if (!concert.availableTickets()) {
-            System.out.println("No more tickets available ⚞^. .^⚟");
+            throw new SoldOutException();
         } else {
             // Create new ticket and add to both concert and user collections
             Ticket ticket = new Ticket(concert, type);
@@ -80,13 +79,12 @@ public class User {
         }
     }
 
-    public void toReview(Concert concert, int review) {
+    public void toReview(Concert concert, int review) throws NotAttendedException, InvalidRatingException {
         // Check if user attended the concert
         if (!concertsAttended.contains(concert)) {
-            System.out.println("You did not attend this concert (•˕ •マ.ᐟ");
-            // Validate review is within valid range
+            throw new NotAttendedException();
         } else if (review < 0 || review > 10) {
-            System.out.println("Not a valid number ₍^. .^₎⟆");
+            throw new InvalidRatingException();
         } else {
             // Store or update reviews for this concert
             this.reviews.put(concert, review);
