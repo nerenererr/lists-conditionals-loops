@@ -25,31 +25,21 @@ public class Main {
         try {
             user1.buyTicket(kaliUchis, Ticket.Type.SEATS);
             System.out.println("ฅ^•ﻌ•^ฅ Terry bought ticket for Kali Uchis");
-        } catch (InactiveConcertException e) {
-            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
-        } catch (AlreadyAttendedException e) {
-            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
-        } catch (SoldOutException e) {
-            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
-        }
+        } catch (InactiveConcertException | AlreadyAttendedException | SoldOutException e) {
+        System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
+    }
 
         try {
             user1.buyTicket(amaia, Ticket.Type.VIP);
             System.out.println("ฅ^•ﻌ•^ฅ Terry bought ticket for Amaia");
-        } catch (InactiveConcertException e) {
-            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());  // This will execute
-        } catch (AlreadyAttendedException e) {
-            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
-        } catch (SoldOutException e) {
+        } catch (InactiveConcertException | AlreadyAttendedException | SoldOutException e) {
             System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
         }
 
         try {
             user1.toReview(kaliUchis, 10);
             System.out.println("ฅ^•ﻌ•^ฅ Terry reviewed Kali Uchis");
-        } catch (NotAttendedException e) {
-            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
-        } catch (InvalidRatingException e) {
+        } catch (NotAttendedException | InvalidRatingException e) {
             System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
         }
 
@@ -89,9 +79,7 @@ public class Main {
         try {
             user3.buyTicket(amaia, Ticket.Type.FLOOR);
             System.out.println("ฅ^•ﻌ•^ฅ Kim bought ticket for Amaia");
-        } catch (InactiveConcertException e) {
-            System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());  // This will execute
-        } catch (AlreadyAttendedException | SoldOutException e) {
+        } catch (InactiveConcertException | AlreadyAttendedException | SoldOutException e) {
             System.out.println("≽(◉˕ ◉ ≼マ Error: " + e.getMessage());
         }
 
